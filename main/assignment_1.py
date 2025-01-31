@@ -21,6 +21,8 @@ def root_two():
 
 root_two()
 
+
+
 ## Bisection Method
 ## Coded to get output from slide 18 of Ch. 2.1 Powerpoint 
 
@@ -41,13 +43,56 @@ def bisection(f, left, right, tol=1e-3, max_iter=10):
             right = mid  
         else:
             left = mid  
-
     return mid  
 
 
 f = lambda x: x**3 + 4*x**2 - 10
-
-
 root = bisection(f, 1, 2)
-
 print(f"Approximate root: {root}")
+
+
+
+## Fixed Point Iteration
+## Coded to get output for example function x^3+4x^2-10=0 from slide 14 Ch. 2.2
+
+def fixed_point_iteration(g, p0, tol=1e-3, max_iteration=100):
+    i = 1
+
+    while i <= max_iteration:
+        p = g(p0)
+
+        if abs(p - p0) < tol:
+            print(f"{p} Success")
+            return
+        
+        i += 1
+        p0 = p
+
+    print("Failure")
+g = lambda x: (10 - 4*x**2) ** (1/3)
+fixed_point_iteration(g, 1.5)
+
+
+
+## Newton Raphson
+## Coded to get output for f(x)=cos(x)-x=0 example from slide 8 Ch. 2.3
+
+import math
+
+def newton_raphson(f, p0, tol=1e-6, max_iterations=100):
+    for i in range(1, max_iterations + 1):
+        if df(p0) == 0:
+            print("Failure")
+            return
+        
+        p_next = p0 - f(p0) / df(p0)
+        if abs(p_next - p0) < tol:
+            print(f"Root: {p_next} success in {i} iterations")
+            return
+        p0 = p_next
+    print("Failure, max reached")
+
+f = lambda x: math.cos(x) - x
+df = lambda x: -math.sin(x) - 1
+
+newton_raphson(f, df, 0.5)
