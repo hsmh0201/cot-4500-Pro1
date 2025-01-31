@@ -79,20 +79,19 @@ fixed_point_iteration(g, 1.5)
 
 import math
 
-def newton_raphson(f, p0, tol=1e-6, max_iterations=100):
-    for i in range(1, max_iterations + 1):
+def newton(f, df, p0, tol=1e-6, max_iter=100):
+    for i in range(1, max_iter + 1):
         if df(p0) == 0:
-            print("Failure")
+            print("Failure: Derivative is zero.")
             return
-        
         p_next = p0 - f(p0) / df(p0)
         if abs(p_next - p0) < tol:
-            print(f"Root: {p_next} success in {i} iterations")
+            print(f"Root: {p_next}, success in {i} iterations")
             return
         p0 = p_next
-    print("Failure, max reached")
+    print("Fail, max iterations reached.")
 
 f = lambda x: math.cos(x) - x
 df = lambda x: -math.sin(x) - 1
 
-newton_raphson(f, df, 0.5)
+newton(f, df, 0.5)
